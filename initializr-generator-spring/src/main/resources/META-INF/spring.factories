@@ -9,6 +9,4 @@ io.spring.initializr.generator.spring.code.kotlin.KotlinProjectGenerationConfigu
 io.spring.initializr.generator.spring.configuration.ApplicationConfigurationProjectGenerationConfiguration,\
 io.spring.initializr.generator.spring.documentation.HelpDocumentProjectGenerationConfiguration,\
 io.spring.initializr.generator.spring.scm.git.GitProjectGenerationConfiguration,\
-io.spring.initializr.generator.spring.web.controller.ControllerGenerationConfiguration,\
-io.spring.initializr.generator.spring.web.service.ServiceGenerationConfiguration,\
-io.spring.initializr.generator.spring.web.repository.RepositoryGenerationConfiguration
+io.spring.initializr.generator.spring.web.WebProjectGenerationConfiguration

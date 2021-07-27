@@ -1,6 +1,5 @@
 package io.spring.initializr.generator.spring.web.repository;
 
-import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.language.Annotation;
 import io.spring.initializr.generator.language.TypeDeclaration;
 import io.spring.initializr.generator.language.java.JavaMethodDeclaration;
@@ -8,19 +7,15 @@ import io.spring.initializr.generator.language.java.JavaReturnStatement;
 import io.spring.initializr.generator.language.java.JavaStringExpression;
 import io.spring.initializr.generator.language.java.JavaTypeDeclaration;
 import io.spring.initializr.generator.project.ProjectDescription;
-import io.spring.initializr.generator.project.ProjectGenerationConfiguration;
 import java.lang.reflect.Modifier;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 
-@ProjectGenerationConfiguration
-@ConditionalOnRequestedDependency("web")
-public class RepositoryGenerationConfiguration {
+public class RepositoryMainContributorConfiguration {
 
     private final ProjectDescription description;
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public RepositoryGenerationConfiguration(ProjectDescription description) {
+    public RepositoryMainContributorConfiguration(ProjectDescription description) {
         this.description = description;
     }
 
