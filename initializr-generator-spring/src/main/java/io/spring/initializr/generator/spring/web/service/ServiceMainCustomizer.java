@@ -1,16 +1,8 @@
 package io.spring.initializr.generator.spring.web.service;
 
-import io.spring.initializr.generator.language.TypeDeclaration;
-import org.springframework.core.Ordered;
+import io.spring.initializr.generator.language.java.JavaTypeDeclaration;
+import io.spring.initializr.generator.spring.web.CodeCustomizer;
 
-@FunctionalInterface
-public interface ServiceMainCustomizer<T extends TypeDeclaration> extends Ordered {
-
-  void customize(T typeDeclaration);
-
-  @Override
-  default int getOrder() {
-    return 0;
-  }
+public interface ServiceMainCustomizer extends CodeCustomizer<JavaTypeDeclaration> {
 
 }

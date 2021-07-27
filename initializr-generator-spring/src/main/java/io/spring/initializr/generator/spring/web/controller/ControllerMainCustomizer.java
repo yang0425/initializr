@@ -1,16 +1,8 @@
 package io.spring.initializr.generator.spring.web.controller;
 
-import io.spring.initializr.generator.language.TypeDeclaration;
-import org.springframework.core.Ordered;
+import io.spring.initializr.generator.language.java.JavaTypeDeclaration;
+import io.spring.initializr.generator.spring.web.CodeCustomizer;
 
-@FunctionalInterface
-public interface ControllerMainCustomizer<T extends TypeDeclaration> extends Ordered {
-
-  void customize(T typeDeclaration);
-
-  @Override
-  default int getOrder() {
-    return 0;
-  }
+public interface ControllerMainCustomizer extends CodeCustomizer<JavaTypeDeclaration> {
 
 }

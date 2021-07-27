@@ -2,7 +2,6 @@ package io.spring.initializr.generator.spring.web.service;
 
 import io.spring.initializr.generator.language.Annotation;
 import io.spring.initializr.generator.language.Parameter;
-import io.spring.initializr.generator.language.TypeDeclaration;
 import io.spring.initializr.generator.language.java.JavaConstructorDeclaration;
 import io.spring.initializr.generator.language.java.JavaExpressionStatement;
 import io.spring.initializr.generator.language.java.JavaFieldDeclaration;
@@ -10,53 +9,65 @@ import io.spring.initializr.generator.language.java.JavaMethodDeclaration;
 import io.spring.initializr.generator.language.java.JavaMethodInvocation;
 import io.spring.initializr.generator.language.java.JavaReturnStatement;
 import io.spring.initializr.generator.language.java.JavaStringExpression;
-import io.spring.initializr.generator.language.java.JavaTypeDeclaration;
 import io.spring.initializr.generator.project.ProjectDescription;
+import io.spring.initializr.generator.spring.web.MainCodeContributor;
 import java.lang.reflect.Modifier;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 
 public class ServiceMainContributorConfiguration {
 
-    private final ProjectDescription description;
+    private static final String CLASS_NAME = "HelloWorldService";
+    private static final String REPOSITORY_FILED_NAME = "helloWorldRepository";
+
+    private final String packageName;
+    private final String repositoryClass;
 
     public ServiceMainContributorConfiguration(ProjectDescription description) {
-        this.description = description;
+        this.packageName = description.getPackageName() + ".service";
+        this.repositoryClass = String.format("%s.repository.HelloWorldRepository", description.getPackageName());
     }
 
     @Bean
-    public ServiceMainContributor serviceMainContributor(
-        ObjectProvider<ServiceMainCustomizer<?>> serviceMainCustomizers) {
-        return new ServiceMainContributor(this.description.getPackageName() + ".service",
+    public MainCodeContributor<ServiceMainCustomizer> serviceMainContributor(
+        ObjectProvider<ServiceMainCustomizer> serviceMainCustomizers) {
+        return new MainCodeContributor<>(packageName, CLASS_NAME, ServiceMainCustomizer.class,
             serviceMainCustomizers);
     }
 
     @Bean
-    public ServiceMainCustomizer<TypeDeclaration> serviceMainAnnotationCustomizer() {
-        return (typeDeclaration) -> typeDeclaration
-            .annotate(Annotation.name("org.springframework.stereotype.Service"));
+    public ServiceMainCustomizer serviceMainAnnotationCustomizer() {
+        return (typeDeclaration) -> {
+            typeDeclaration.modifiers(Modifier.PUBLIC);
+
+            typeDeclaration.annotate(Annotation.name("org.springframework.stereotype.Service"));
+        };
     }
 
     @Bean
-    public ServiceMainCustomizer<JavaTypeDeclaration> serviceMainMethodCustomizer() {
-        return (typeDeclaration) -> {
-            typeDeclaration.modifiers(Modifier.PUBLIC);
-            String repositoryClass =
-                String.format("%s.repository.HelloWorldRepository", this.description.getPackageName());
-            String repositoryFiledName = "helloWorldRepository";
-            typeDeclaration.addFieldDeclaration(JavaFieldDeclaration.field(repositoryFiledName)
+    public ServiceMainCustomizer serviceMainFieldCustomizer() {
+        return (typeDeclaration) -> typeDeclaration
+            .addFieldDeclaration(JavaFieldDeclaration.field(REPOSITORY_FILED_NAME)
                 .modifiers(Modifier.PRIVATE | Modifier.FINAL)
                 .returning(repositoryClass));
-            typeDeclaration.addConstructorDeclaration(JavaConstructorDeclaration.constructor()
-                .modifiers(Modifier.PUBLIC).parameters(new Parameter(repositoryClass, repositoryFiledName))
-                .body(new JavaExpressionStatement(
-                    new JavaStringExpression(
-                        String.format("this.%s = %s", repositoryFiledName, repositoryFiledName)))));
-            typeDeclaration.addMethodDeclaration(
-                JavaMethodDeclaration.method("getHelloWorld").modifiers(Modifier.PUBLIC)
-                    .returning("String")
-                    .body(new JavaReturnStatement(new JavaMethodInvocation(repositoryFiledName, "getHelloWorld"))));
-        };
+    }
+
+    @Bean
+    public ServiceMainCustomizer serviceMainConstructorCustomizer() {
+        return (typeDeclaration) -> typeDeclaration.addConstructorDeclaration(JavaConstructorDeclaration.constructor()
+            .modifiers(Modifier.PUBLIC)
+            .parameters(new Parameter(repositoryClass, REPOSITORY_FILED_NAME))
+            .body(new JavaExpressionStatement(new JavaStringExpression(
+                String.format("this.%s = %s", REPOSITORY_FILED_NAME, REPOSITORY_FILED_NAME)))));
+    }
+
+    @Bean
+    public ServiceMainCustomizer serviceMainMethodCustomizer() {
+        return (typeDeclaration) -> typeDeclaration.addMethodDeclaration(
+            JavaMethodDeclaration.method("getHelloWorld")
+                .modifiers(Modifier.PUBLIC)
+                .returning("String")
+                .body(new JavaReturnStatement(new JavaMethodInvocation(REPOSITORY_FILED_NAME, "getHelloWorld"))));
     }
 
 }
