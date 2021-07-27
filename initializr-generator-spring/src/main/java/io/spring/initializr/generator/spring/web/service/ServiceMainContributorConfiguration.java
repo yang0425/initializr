@@ -3,12 +3,14 @@ package io.spring.initializr.generator.spring.web.service;
 import io.spring.initializr.generator.language.Annotation;
 import io.spring.initializr.generator.language.Parameter;
 import io.spring.initializr.generator.language.java.JavaConstructorDeclaration;
+import io.spring.initializr.generator.language.java.JavaEmptyLineStatement;
 import io.spring.initializr.generator.language.java.JavaExpressionStatement;
 import io.spring.initializr.generator.language.java.JavaFieldDeclaration;
 import io.spring.initializr.generator.language.java.JavaMethodDeclaration;
 import io.spring.initializr.generator.language.java.JavaMethodInvocation;
 import io.spring.initializr.generator.language.java.JavaReturnStatement;
 import io.spring.initializr.generator.language.java.JavaStringExpression;
+import io.spring.initializr.generator.language.java.JavaVariableExpressionStatement;
 import io.spring.initializr.generator.project.ProjectDescription;
 import io.spring.initializr.generator.spring.web.MainCodeContributor;
 import java.lang.reflect.Modifier;
@@ -22,10 +24,14 @@ public class ServiceMainContributorConfiguration {
 
     private final String packageName;
     private final String repositoryClass;
+    private final String entityClass;
+    private final String dtoClass;
 
     public ServiceMainContributorConfiguration(ProjectDescription description) {
         this.packageName = description.getPackageName() + ".service";
         this.repositoryClass = String.format("%s.repository.HelloWorldRepository", description.getPackageName());
+        this.entityClass = String.format("%s.entity.HelloWorld", description.getPackageName());
+        this.dtoClass = String.format("%s.dto.HelloWorldDto", description.getPackageName());
     }
 
     @Bean
@@ -66,8 +72,11 @@ public class ServiceMainContributorConfiguration {
         return (typeDeclaration) -> typeDeclaration.addMethodDeclaration(
             JavaMethodDeclaration.method("getHelloWorld")
                 .modifiers(Modifier.PUBLIC)
-                .returning("String")
-                .body(new JavaReturnStatement(new JavaMethodInvocation(REPOSITORY_FILED_NAME, "getHelloWorld"))));
+                .returning(dtoClass)
+                .body(new JavaVariableExpressionStatement(entityClass, "message",
+                        new JavaMethodInvocation("helloWorldRepository", "getHelloWorld")),
+                    new JavaEmptyLineStatement(),
+                    new JavaReturnStatement(new JavaStringExpression("new HelloWorldDto(message.getMessage())"))));
     }
 
 }

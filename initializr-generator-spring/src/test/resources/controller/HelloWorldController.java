@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.HelloWorldDto;
 import com.example.demo.service.HelloWorldService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class HelloWorldController {
     }
 
     @GetMapping
-    public String helloWorld() {
+    public HelloWorldDto helloWorld() {
         return helloWorldService.getHelloWorld();
     }
 

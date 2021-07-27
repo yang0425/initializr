@@ -22,10 +22,12 @@ public class ControllerMainContributorConfiguration {
 
     private final String packageName;
     private final String serviceClass;
+    private final String dtoClass;
 
     public ControllerMainContributorConfiguration(ProjectDescription description) {
         this.packageName = description.getPackageName() + ".controller";
         this.serviceClass = String.format("%s.service.HelloWorldService", description.getPackageName());
+        this.dtoClass = String.format("%s.dto.HelloWorldDto", description.getPackageName());
     }
 
     @Bean
@@ -65,7 +67,7 @@ public class ControllerMainContributorConfiguration {
         return (typeDeclaration) -> {
             JavaMethodDeclaration methodDeclaration = JavaMethodDeclaration.method("helloWorld")
                 .modifiers(Modifier.PUBLIC)
-                .returning("String")
+                .returning(dtoClass)
                 .body(new JavaReturnStatement(new JavaMethodInvocation(SERVICE_FIELD_NAME, "getHelloWorld")));
             methodDeclaration.annotate(Annotation.name("org.springframework.web.bind.annotation.GetMapping"));
             typeDeclaration.addMethodDeclaration(methodDeclaration);

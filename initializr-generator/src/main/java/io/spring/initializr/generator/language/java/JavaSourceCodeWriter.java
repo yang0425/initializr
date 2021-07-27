@@ -255,6 +255,14 @@ public class JavaSourceCodeWriter implements SourceCodeWriter<JavaSourceCode> {
                 } else if (statement instanceof JavaReturnStatement) {
                     writer.print("return ");
                     writeExpression(writer, ((JavaReturnStatement) statement).getExpression());
+                } else if (statement instanceof JavaEmptyLineStatement) {
+                    writer.println();
+                    continue;
+                } else if (statement instanceof JavaVariableExpressionStatement) {
+                    writer.print(String
+                        .format("%s %s = ", getUnqualifiedName(((JavaVariableExpressionStatement) statement).getType()),
+                            ((JavaVariableExpressionStatement) statement).getName()));
+                    writeExpression(writer, ((JavaVariableExpressionStatement) statement).getExpression());
                 }
                 writer.println(";");
             }
@@ -312,6 +320,10 @@ public class JavaSourceCodeWriter implements SourceCodeWriter<JavaSourceCode> {
                         .map(JavaExpressionStatement.class::cast).map(JavaExpressionStatement::getExpression)
                         .filter(JavaMethodInvocation.class::isInstance).map(JavaMethodInvocation.class::cast),
                     (methodInvocation) -> Collections.singleton(methodInvocation.getTarget())));
+                imports.addAll(getRequiredImports(
+                    methodDeclaration.getStatements().stream().filter(JavaVariableExpressionStatement.class::isInstance)
+                    .map(JavaVariableExpressionStatement.class::cast).map(JavaVariableExpressionStatement::getType),
+                    Collections::singleton));
             }
         }
         Collections.sort(imports);

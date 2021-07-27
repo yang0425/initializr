@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.HelloWorldDto;
+import com.example.demo.entity.HelloWorld;
 import com.example.demo.repository.HelloWorldRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,10 @@ public class HelloWorldService {
         this.helloWorldRepository = helloWorldRepository;
     }
 
-    public String getHelloWorld() {
-        return helloWorldRepository.getHelloWorld();
+    public HelloWorldDto getHelloWorld() {
+        HelloWorld message = helloWorldRepository.getHelloWorld();
+
+        return new HelloWorldDto(message.getMessage());
     }
 
 }

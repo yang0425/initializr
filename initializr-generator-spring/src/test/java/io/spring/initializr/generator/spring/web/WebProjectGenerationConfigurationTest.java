@@ -30,7 +30,9 @@ class WebProjectGenerationConfigurationTest {
         assertThat(project).doesNotContainFiles(
             "src/main/java/com/example/demo/controller/HelloWorldController.java",
             "src/main/java/com/example/demo/service/HelloWorldService.java",
-            "src/main/java/com/example/demo/repository/HelloWorldRepository.java"
+            "src/main/java/com/example/demo/repository/HelloWorldRepository.java",
+            "src/main/java/com/example/demo/entity/HelloWorld.java",
+            "src/main/java/com/example/demo/dto/HelloWorldDto.java"
         );
     }
 
@@ -44,7 +46,9 @@ class WebProjectGenerationConfigurationTest {
         assertThat(project).containsFiles(
             "src/main/java/com/example/demo/controller/HelloWorldController.java",
             "src/main/java/com/example/demo/service/HelloWorldService.java",
-            "src/main/java/com/example/demo/repository/HelloWorldRepository.java"
+            "src/main/java/com/example/demo/repository/HelloWorldRepository.java",
+            "src/main/java/com/example/demo/entity/HelloWorld.java",
+            "src/main/java/com/example/demo/dto/HelloWorldDto.java"
         );
     }
 
