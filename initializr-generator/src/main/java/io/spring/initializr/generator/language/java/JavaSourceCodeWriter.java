@@ -237,11 +237,13 @@ public class JavaSourceCodeWriter implements SourceCodeWriter<JavaSourceCode> {
 		}
 	}
 
-	private void writeExpression(IndentingWriter writer, JavaExpression expression) {
-		if (expression instanceof JavaMethodInvocation) {
-			writeMethodInvocation(writer, (JavaMethodInvocation) expression);
-		}
-	}
+    private void writeExpression(IndentingWriter writer, JavaExpression expression) {
+        if (expression instanceof JavaMethodInvocation) {
+            writeMethodInvocation(writer, (JavaMethodInvocation) expression);
+        } else if (expression instanceof JavaStringExpression) {
+            writer.print(((JavaStringExpression) expression).getContent());
+        }
+    }
 
 	private void writeMethodInvocation(IndentingWriter writer, JavaMethodInvocation methodInvocation) {
 		writer.print(getUnqualifiedName(methodInvocation.getTarget()) + "." + methodInvocation.getName() + "("

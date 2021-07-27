@@ -16,6 +16,14 @@
 
 package io.spring.initializr.generator.language.java;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+
+import io.spring.initializr.generator.io.IndentingWriterFactory;
+import io.spring.initializr.generator.language.Annotation;
+import io.spring.initializr.generator.language.Language;
+import io.spring.initializr.generator.language.Parameter;
+import io.spring.initializr.generator.language.SourceStructure;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Modifier;
@@ -26,19 +34,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
-import io.spring.initializr.generator.io.IndentingWriterFactory;
-import io.spring.initializr.generator.language.Annotation;
-import io.spring.initializr.generator.language.Language;
-import io.spring.initializr.generator.language.Parameter;
-import io.spring.initializr.generator.language.SourceStructure;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-
 import org.springframework.util.StreamUtils;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 /**
  * Tests for {@link JavaSourceCodeWriter}.
@@ -116,6 +114,19 @@ class JavaSourceCodeWriterTests {
 		List<String> lines = writeSingleType(sourceCode, "com/example/Test.java");
 		assertThat(lines).containsExactly("package com.example;", "", "class Test {", "",
 				"    public String trim(String value) {", "        return value.trim();", "    }", "", "}");
+	}
+
+	@Test
+	void methodWithPlainText() throws IOException {
+		JavaSourceCode sourceCode = new JavaSourceCode();
+		JavaCompilationUnit compilationUnit = sourceCode.createCompilationUnit("com.example", "Test");
+		JavaTypeDeclaration test = compilationUnit.createTypeDeclaration("Test");
+		test.addMethodDeclaration(JavaMethodDeclaration.method("hello").returning("java.lang.String")
+			.modifiers(Modifier.PUBLIC)
+			.body(new JavaReturnStatement(new JavaStringExpression("\"Hello World!\""))));
+		List<String> lines = writeSingleType(sourceCode, "com/example/Test.java");
+		assertThat(lines).containsExactly("package com.example;", "", "class Test {", "",
+			"    public String hello() {", "        return \"Hello World!\";", "    }", "", "}");
 	}
 
 	@Test
