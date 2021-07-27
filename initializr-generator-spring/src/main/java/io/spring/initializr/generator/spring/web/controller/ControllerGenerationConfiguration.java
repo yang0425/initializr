@@ -64,8 +64,7 @@ public class ControllerGenerationConfiguration {
                 .body(new JavaReturnStatement(
                     new JavaMethodInvocation(serviceFiledName, "getHelloWorld")));
             methodDeclaration.annotate(Annotation.name("org.springframework.web.bind.annotation.GetMapping"));
-            typeDeclaration.addMethodDeclaration(
-                methodDeclaration);
+            typeDeclaration.addMethodDeclaration(methodDeclaration);
         };
     }
 
