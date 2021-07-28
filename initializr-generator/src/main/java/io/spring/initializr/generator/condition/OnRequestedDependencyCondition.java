@@ -34,7 +34,10 @@ class OnRequestedDependencyCondition extends ProjectGenerationCondition {
 			AnnotatedTypeMetadata metadata) {
 		String id = (String) metadata.getAnnotationAttributes(ConditionalOnRequestedDependency.class.getName())
 				.get("value");
-		return description.getRequestedDependencies().containsKey(id);
+		boolean containsDependency = description.getRequestedDependencies().containsKey(id);
+		boolean provided = (Boolean) metadata.getAnnotationAttributes(ConditionalOnRequestedDependency.class.getName())
+				.get("provided");
+		return (containsDependency && provided) || (!containsDependency && !provided);
 	}
 
 }

@@ -27,7 +27,6 @@ import io.spring.initializr.generator.language.kotlin.KotlinLanguage;
 import io.spring.initializr.generator.packaging.Packaging;
 import io.spring.initializr.generator.spring.AbstractComplianceTests;
 import io.spring.initializr.generator.test.project.ProjectStructure;
-import io.spring.initializr.metadata.support.MetadataBuildItemMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -91,16 +90,6 @@ class CodeComplianceTests extends AbstractComplianceTests {
 		assertThat(project).asJvmModule(language).testSource("com.example.demo", "DemoApplicationTests")
 				.hasSameContentAs(new ClassPathResource(
 						"project/" + language + "/standard/DemoApplicationTests." + getExpectedExtension(language)));
-	}
-
-	@ParameterizedTest
-	@MethodSource("parameters")
-	void currentGenerationTestClassWeb(Language language) {
-		ProjectStructure project = generateProject(language, maven, "2.4.1",
-				(description) -> description.addDependency("web", MetadataBuildItemMapper.toDependency(WEB)));
-		assertThat(project).asJvmModule(language).testSource("com.example.demo", "DemoApplicationTests")
-				.hasSameContentAs(new ClassPathResource(
-						"project/" + language + "/standard/DemoApplicationTestsWeb." + getExpectedExtension(language)));
 	}
 
 	@ParameterizedTest

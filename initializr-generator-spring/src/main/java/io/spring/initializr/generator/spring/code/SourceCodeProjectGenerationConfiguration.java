@@ -18,6 +18,7 @@ package io.spring.initializr.generator.spring.code;
 
 import io.spring.initializr.generator.condition.ConditionalOnPackaging;
 import io.spring.initializr.generator.condition.ConditionalOnPlatformVersion;
+import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.language.Annotation;
 import io.spring.initializr.generator.language.TypeDeclaration;
 import io.spring.initializr.generator.packaging.war.WarPackaging;
@@ -43,6 +44,7 @@ public class SourceCodeProjectGenerationConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnRequestedDependency(value = "web", provided = false)
 	public TestApplicationTypeCustomizer<TypeDeclaration> junitJupiterSpringBootTestTypeCustomizer() {
 		return (typeDeclaration) -> typeDeclaration
 				.annotate(Annotation.name("org.springframework.boot.test.context.SpringBootTest"));

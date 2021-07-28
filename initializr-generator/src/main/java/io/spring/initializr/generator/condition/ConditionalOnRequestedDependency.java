@@ -48,4 +48,6 @@ public @interface ConditionalOnRequestedDependency {
 	 */
 	String value();
 
+	boolean provided() default true;
+
 }

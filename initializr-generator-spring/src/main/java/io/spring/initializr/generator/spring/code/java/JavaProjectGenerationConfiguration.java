@@ -17,6 +17,7 @@
 package io.spring.initializr.generator.spring.code.java;
 
 import io.spring.initializr.generator.condition.ConditionalOnLanguage;
+import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.io.IndentingWriterFactory;
 import io.spring.initializr.generator.language.java.JavaCompilationUnit;
 import io.spring.initializr.generator.language.java.JavaLanguage;
@@ -69,6 +70,7 @@ public class JavaProjectGenerationConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnRequestedDependency(value = "web", provided = false)
 	public TestSourceCodeProjectContributor<JavaTypeDeclaration, JavaCompilationUnit, JavaSourceCode> testJavaSourceCodeProjectContributor(
 			ObjectProvider<TestApplicationTypeCustomizer<?>> testApplicationTypeCustomizers,
 			ObjectProvider<TestSourceCodeCustomizer<?, ?, ?>> testSourceCodeCustomizers) {

@@ -19,6 +19,7 @@ package io.spring.initializr.generator.spring.code.java;
 import java.lang.reflect.Modifier;
 
 import io.spring.initializr.generator.condition.ConditionalOnPackaging;
+import io.spring.initializr.generator.condition.ConditionalOnRequestedDependency;
 import io.spring.initializr.generator.language.Annotation;
 import io.spring.initializr.generator.language.Parameter;
 import io.spring.initializr.generator.language.java.JavaExpressionStatement;
@@ -58,6 +59,7 @@ class JavaProjectGenerationDefaultContributorsConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnRequestedDependency(value = "web", provided = false)
 	TestApplicationTypeCustomizer<JavaTypeDeclaration> junitJupiterTestMethodContributor() {
 		return (typeDeclaration) -> {
 			JavaMethodDeclaration method = JavaMethodDeclaration.method("contextLoads").returning("void").body();

@@ -49,4 +49,24 @@ class WebProjectGenerationConfigurationTest {
 				"src/main/java/com/example/demo/dto/HelloWorldDto.java");
 	}
 
+	@Test
+	void classesAreContributedWithoutWebDependency() {
+		MutableProjectDescription description = new MutableProjectDescription();
+
+		ProjectStructure project = this.projectTester.generate(description);
+
+		assertThat(project).containsFiles("src/test/java/com/example/demo/DemoApplicationTests.java");
+	}
+
+	@Test
+	void classesAreNotContributedWithWebDependency() {
+		MutableProjectDescription description = new MutableProjectDescription();
+		description.addDependency("web", Dependency.withCoordinates("web", "web").build());
+
+		ProjectStructure project = this.projectTester.generate(description);
+
+		assertThat(project)
+				.doesNotContainFiles("src/test/java/com/example/demo/DemoApplicationTests.java");
+	}
+
 }
