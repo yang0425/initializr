@@ -32,7 +32,7 @@ class ServiceMainContributorConfigurationTests {
 		ProjectStructure project = this.projectTester.generate(description);
 
 		assertThat(project).textFile("src/main/java/com/example/demo/service/HelloWorldService.java")
-				.hasSameContentAs(new ClassPathResource("service/HelloWorldService.java"));
+				.hasSameContentAs(new ClassPathResource("project/java/web/service/HelloWorldService.java.gen"));
 	}
 
 }

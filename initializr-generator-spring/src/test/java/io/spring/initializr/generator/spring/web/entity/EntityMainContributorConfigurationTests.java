@@ -32,7 +32,7 @@ class EntityMainContributorConfigurationTests {
 		ProjectStructure project = this.projectTester.generate(description);
 
 		assertThat(project).textFile("src/main/java/com/example/demo/entity/HelloWorld.java")
-				.hasSameContentAs(new ClassPathResource("entity/HelloWorld.java"));
+				.hasSameContentAs(new ClassPathResource("project/java/web/entity/HelloWorld.java.gen"));
 	}
 
 }

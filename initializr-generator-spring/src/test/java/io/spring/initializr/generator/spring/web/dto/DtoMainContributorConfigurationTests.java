@@ -32,7 +32,7 @@ class DtoMainContributorConfigurationTests {
 		ProjectStructure project = this.projectTester.generate(description);
 
 		assertThat(project).textFile("src/main/java/com/example/demo/dto/HelloWorldDto.java")
-				.hasSameContentAs(new ClassPathResource("dto/HelloWorldDto.java"));
+				.hasSameContentAs(new ClassPathResource("project/java/web/dto/HelloWorldDto.java.gen"));
 	}
 
 }

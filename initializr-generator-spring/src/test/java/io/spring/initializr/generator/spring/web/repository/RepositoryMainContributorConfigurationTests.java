@@ -32,7 +32,7 @@ class RepositoryMainContributorConfigurationTests {
 		ProjectStructure project = this.projectTester.generate(description);
 
 		assertThat(project).textFile("src/main/java/com/example/demo/repository/HelloWorldRepository.java")
-				.hasSameContentAs(new ClassPathResource("repository/HelloWorldRepository.java"));
+				.hasSameContentAs(new ClassPathResource("project/java/web/repository/HelloWorldRepository.java.gen"));
 	}
 
 }

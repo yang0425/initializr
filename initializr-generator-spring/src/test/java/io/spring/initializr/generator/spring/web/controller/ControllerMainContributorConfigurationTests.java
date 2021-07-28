@@ -32,7 +32,7 @@ class ControllerMainContributorConfigurationTests {
 		ProjectStructure project = this.projectTester.generate(description);
 
 		assertThat(project).textFile("src/main/java/com/example/demo/controller/HelloWorldController.java")
-				.hasSameContentAs(new ClassPathResource("controller/HelloWorldController.java"));
+				.hasSameContentAs(new ClassPathResource("project/java/web/controller/HelloWorldController.java.gen"));
 	}
 
 }
