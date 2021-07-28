@@ -57,19 +57,19 @@ public final class JavaMethodDeclaration implements Annotatable {
 		return new Builder(name);
 	}
 
-	String getName() {
+	public String getName() {
 		return this.name;
 	}
 
-	String getReturnType() {
+	public String getReturnType() {
 		return this.returnType;
 	}
 
-	List<Parameter> getParameters() {
+	public List<Parameter> getParameters() {
 		return this.parameters;
 	}
 
-	int getModifiers() {
+	public int getModifiers() {
 		return this.modifiers;
 	}
 
