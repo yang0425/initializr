@@ -21,28 +21,28 @@ public class AnnotationsWriter implements CodeWriter {
 
 	@Override
 	public void write(IndentingWriter writer) {
-		annotatable.getAnnotations().stream().flatMap(this::createCodeWriters)
-				.forEach(codeWriter -> codeWriter.write(writer));
+		this.annotatable.getAnnotations().stream().flatMap(this::createCodeWriters)
+				.forEach((codeWriter) -> codeWriter.write(writer));
 	}
 
 	private Stream<CodeWriter> createCodeWriters(Annotation annotation) {
 		List<CodeWriter> codeWriters = new LinkedList<>();
 
-		codeWriters.add(writer -> writer.print("@" + getUnqualifiedName(annotation.getName())));
+		codeWriters.add((writer) -> writer.print("@" + getUnqualifiedName(annotation.getName())));
 
 		List<Attribute> attributes = annotation.getAttributes();
 		if (!attributes.isEmpty()) {
-			codeWriters.add(writer -> writer.print("("));
+			codeWriters.add((writer) -> writer.print("("));
 			if (attributes.size() == 1 && attributes.get(0).getName().equals("value")) {
-				codeWriters.add(writer -> writer.print(formatAnnotationAttribute(attributes.get(0))));
+				codeWriters.add((writer) -> writer.print(formatAnnotationAttribute(attributes.get(0))));
 			}
 			else {
-				codeWriters.add(writer -> writer.print(attributes.stream()
+				codeWriters.add((writer) -> writer.print(attributes.stream()
 						.map((attribute) -> attribute.getName() + " = " + formatAnnotationAttribute(attribute))
 						.collect(Collectors.joining(", "))));
 			}
 
-			codeWriters.add(writer -> writer.print(")"));
+			codeWriters.add((writer) -> writer.print(")"));
 		}
 		codeWriters.add(IndentingWriter::println);
 		return codeWriters.stream();

@@ -33,9 +33,9 @@ public class FieldsWriter implements CodeWriter {
 
 	@Override
 	public void write(IndentingWriter writer) {
-		if (!fieldDeclarations.isEmpty()) {
+		if (!this.fieldDeclarations.isEmpty()) {
 			writer.indented(() -> {
-				for (JavaFieldDeclaration fieldDeclaration : fieldDeclarations) {
+				for (JavaFieldDeclaration fieldDeclaration : this.fieldDeclarations) {
 					writeFieldDeclaration(writer, fieldDeclaration);
 				}
 			});

@@ -39,9 +39,9 @@ public class ConstructorsWriter implements CodeWriter {
 
 	@Override
 	public void write(IndentingWriter writer) {
-		if (!constructorDeclarations.isEmpty()) {
+		if (!this.constructorDeclarations.isEmpty()) {
 			writer.indented(() -> {
-				for (JavaConstructorDeclaration constructorDeclaration : constructorDeclarations) {
+				for (JavaConstructorDeclaration constructorDeclaration : this.constructorDeclarations) {
 					writeConstructorDeclaration(writer, constructorDeclaration);
 				}
 			});
@@ -76,16 +76,11 @@ public class ConstructorsWriter implements CodeWriter {
 
 	private void writeExpression(IndentingWriter writer, JavaExpression expression) {
 		if (expression instanceof JavaMethodInvocation) {
-			writeMethodInvocation(writer, (JavaMethodInvocation) expression);
+			expression.write(writer);
 		}
 		else if (expression instanceof JavaStringExpression) {
 			writer.print(((JavaStringExpression) expression).getContent());
 		}
-	}
-
-	private void writeMethodInvocation(IndentingWriter writer, JavaMethodInvocation methodInvocation) {
-		writer.print(getUnqualifiedName(methodInvocation.getTarget()) + "." + methodInvocation.getName() + "("
-				+ String.join(", ", methodInvocation.getArguments()) + ")");
 	}
 
 }

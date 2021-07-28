@@ -149,9 +149,7 @@ class ProjectGenerationControllerIntegrationTests extends AbstractInitializrCont
 				"/starter.zip?dependencies=web&dependencies=security&packaging=war&type=gradle-project");
 		assertThat(project).hasGroovyDslGradleBuild().hasGradleWrapper();
 		assertThat(project).containsFiles("src/main/java/com/example/demo/DemoApplication.java",
-				"src/main/java/com/example/demo/ServletInitializer.java",
-				"src/test/java/com/example/demo/DemoApplicationTests.java",
-				"src/main/resources/application.properties");
+				"src/main/java/com/example/demo/ServletInitializer.java", "src/main/resources/application.properties");
 		assertHasWebResources(project);
 	}
 

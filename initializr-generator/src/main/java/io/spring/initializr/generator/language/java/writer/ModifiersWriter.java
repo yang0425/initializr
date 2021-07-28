@@ -19,8 +19,8 @@ public class ModifiersWriter implements CodeWriter {
 
 	@Override
 	public void write(IndentingWriter writer) {
-		String modifiers = availableModifiers.entrySet().stream()
-				.filter((entry) -> entry.getKey().test(declaredModifiers)).map(Map.Entry::getValue)
+		String modifiers = this.availableModifiers.entrySet().stream()
+				.filter((entry) -> entry.getKey().test(this.declaredModifiers)).map(Map.Entry::getValue)
 				.collect(Collectors.joining(" "));
 		if (!modifiers.isEmpty()) {
 			writer.print(modifiers);

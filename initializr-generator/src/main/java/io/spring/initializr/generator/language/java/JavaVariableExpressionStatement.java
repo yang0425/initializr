@@ -1,6 +1,11 @@
 package io.spring.initializr.generator.language.java;
 
-public class JavaVariableExpressionStatement extends JavaStatement {
+import java.util.ArrayList;
+import java.util.List;
+
+import io.spring.initializr.generator.io.IndentingWriter;
+
+public class JavaVariableExpressionStatement implements JavaStatement {
 
 	private final String type;
 
@@ -24,6 +29,26 @@ public class JavaVariableExpressionStatement extends JavaStatement {
 
 	public JavaExpression getExpression() {
 		return this.expression;
+	}
+
+	@Override
+	public List<String> getImports() {
+		List<String> imports = new ArrayList<>();
+		imports.add(this.type);
+		imports.addAll(this.expression.getImports());
+		return imports;
+	}
+
+	@Override
+	public List<String> getStaticImports() {
+		return this.expression.getStaticImports();
+	}
+
+	@Override
+	public void write(IndentingWriter writer) {
+		writer.print(String.format("%s %s = ", getUnqualifiedName(this.type), this.name));
+		this.expression.write(writer);
+		writer.println(";");
 	}
 
 }

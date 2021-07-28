@@ -9,15 +9,8 @@ import java.util.stream.Collectors;
 
 import io.spring.initializr.generator.io.IndentingWriter;
 import io.spring.initializr.generator.language.Parameter;
-import io.spring.initializr.generator.language.java.JavaEmptyLineStatement;
-import io.spring.initializr.generator.language.java.JavaExpression;
-import io.spring.initializr.generator.language.java.JavaExpressionStatement;
 import io.spring.initializr.generator.language.java.JavaMethodDeclaration;
-import io.spring.initializr.generator.language.java.JavaMethodInvocation;
-import io.spring.initializr.generator.language.java.JavaReturnStatement;
 import io.spring.initializr.generator.language.java.JavaStatement;
-import io.spring.initializr.generator.language.java.JavaStringExpression;
-import io.spring.initializr.generator.language.java.JavaVariableExpressionStatement;
 
 public class MethodsWriter implements CodeWriter {
 
@@ -45,9 +38,9 @@ public class MethodsWriter implements CodeWriter {
 
 	@Override
 	public void write(IndentingWriter writer) {
-		if (!methodDeclarations.isEmpty()) {
+		if (!this.methodDeclarations.isEmpty()) {
 			writer.indented(() -> {
-				for (JavaMethodDeclaration methodDeclaration : methodDeclarations) {
+				for (JavaMethodDeclaration methodDeclaration : this.methodDeclarations) {
 					writeMethodDeclaration(writer, methodDeclaration);
 				}
 			});
@@ -71,42 +64,11 @@ public class MethodsWriter implements CodeWriter {
 		writer.indented(() -> {
 			List<JavaStatement> statements = methodDeclaration.getStatements();
 			for (JavaStatement statement : statements) {
-				if (statement instanceof JavaExpressionStatement) {
-					writeExpression(writer, ((JavaExpressionStatement) statement).getExpression());
-				}
-				else if (statement instanceof JavaReturnStatement) {
-					writer.print("return ");
-					writeExpression(writer, ((JavaReturnStatement) statement).getExpression());
-				}
-				else if (statement instanceof JavaEmptyLineStatement) {
-					writer.println();
-					continue;
-				}
-				else if (statement instanceof JavaVariableExpressionStatement) {
-					writer.print(String.format("%s %s = ",
-							getUnqualifiedName(((JavaVariableExpressionStatement) statement).getType()),
-							((JavaVariableExpressionStatement) statement).getName()));
-					writeExpression(writer, ((JavaVariableExpressionStatement) statement).getExpression());
-				}
-				writer.println(";");
+				statement.write(writer);
 			}
 		});
 		writer.println("}");
 		writer.println();
-	}
-
-	private void writeExpression(IndentingWriter writer, JavaExpression expression) {
-		if (expression instanceof JavaMethodInvocation) {
-			writeMethodInvocation(writer, (JavaMethodInvocation) expression);
-		}
-		else if (expression instanceof JavaStringExpression) {
-			writer.print(((JavaStringExpression) expression).getContent());
-		}
-	}
-
-	private void writeMethodInvocation(IndentingWriter writer, JavaMethodInvocation methodInvocation) {
-		writer.print(getUnqualifiedName(methodInvocation.getTarget()) + "." + methodInvocation.getName() + "("
-				+ String.join(", ", methodInvocation.getArguments()) + ")");
 	}
 
 }

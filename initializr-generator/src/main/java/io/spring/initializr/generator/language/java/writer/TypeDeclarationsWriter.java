@@ -35,25 +35,26 @@ public class TypeDeclarationsWriter implements CodeWriter {
 
 	@Override
 	public void write(IndentingWriter writer) {
-		typeDeclarations.stream().flatMap(this::createCodeWriters).forEach(codeWriter -> codeWriter.write(writer));
+		this.typeDeclarations.stream().flatMap(this::createCodeWriters)
+				.forEach((codeWriter) -> codeWriter.write(writer));
 	}
 
 	private Stream<CodeWriter> createCodeWriters(JavaTypeDeclaration type) {
 		List<CodeWriter> codeWriters = new LinkedList<>();
 		codeWriters.add(new AnnotationsWriter(type));
 		codeWriters.add(new ModifiersWriter(TYPE_MODIFIERS, type.getModifiers()));
-		codeWriters.add(writer -> writer.print("class " + type.getName()));
+		codeWriters.add((writer) -> writer.print("class " + type.getName()));
 		if (type.getExtends() != null) {
-			codeWriters.add(writer -> writer.print(" extends " + getUnqualifiedName(type.getExtends())));
+			codeWriters.add((writer) -> writer.print(" extends " + getUnqualifiedName(type.getExtends())));
 		}
-		codeWriters.add(writer -> writer.println(" {"));
+		codeWriters.add((writer) -> writer.println(" {"));
 		codeWriters.add(IndentingWriter::println);
 
 		codeWriters.add(new FieldsWriter(type.getFieldDeclarations()));
 		codeWriters.add(new ConstructorsWriter(type.getName(), type.getConstructorDeclarations()));
 		codeWriters.add(new MethodsWriter(type.getMethodDeclarations()));
 
-		codeWriters.add(writer -> writer.println("}"));
+		codeWriters.add((writer) -> writer.println("}"));
 
 		return codeWriters.stream();
 	}

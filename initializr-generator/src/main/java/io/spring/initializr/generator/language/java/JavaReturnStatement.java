@@ -16,12 +16,16 @@
 
 package io.spring.initializr.generator.language.java;
 
+import java.util.List;
+
+import io.spring.initializr.generator.io.IndentingWriter;
+
 /**
  * A return statement.
  *
  * @author Andy Wilkinson
  */
-public class JavaReturnStatement extends JavaStatement {
+public class JavaReturnStatement implements JavaStatement {
 
 	private final JavaExpression expression;
 
@@ -31,6 +35,23 @@ public class JavaReturnStatement extends JavaStatement {
 
 	public JavaExpression getExpression() {
 		return this.expression;
+	}
+
+	@Override
+	public List<String> getImports() {
+		return this.expression.getImports();
+	}
+
+	@Override
+	public List<String> getStaticImports() {
+		return this.expression.getStaticImports();
+	}
+
+	@Override
+	public void write(IndentingWriter writer) {
+		writer.print("return ");
+		this.expression.write(writer);
+		writer.println(";");
 	}
 
 }

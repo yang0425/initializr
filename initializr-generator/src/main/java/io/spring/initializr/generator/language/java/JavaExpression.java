@@ -16,11 +16,9 @@
 
 package io.spring.initializr.generator.language.java;
 
-/**
- * A Java expression.
- *
- * @author Andy Wilkinson
- */
-public class JavaExpression {
+import io.spring.initializr.generator.language.java.writer.CodeImports;
+import io.spring.initializr.generator.language.java.writer.CodeWriter;
+
+public interface JavaExpression extends CodeImports, CodeWriter {
 
 }

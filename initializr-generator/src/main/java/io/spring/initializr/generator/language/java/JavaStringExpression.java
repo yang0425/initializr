@@ -16,7 +16,12 @@
 
 package io.spring.initializr.generator.language.java;
 
-public class JavaStringExpression extends JavaExpression {
+import java.util.Collections;
+import java.util.List;
+
+import io.spring.initializr.generator.io.IndentingWriter;
+
+public class JavaStringExpression implements JavaExpression {
 
 	private final String content;
 
@@ -26,6 +31,21 @@ public class JavaStringExpression extends JavaExpression {
 
 	public String getContent() {
 		return this.content;
+	}
+
+	@Override
+	public List<String> getImports() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<String> getStaticImports() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public void write(IndentingWriter writer) {
+		writer.print(this.content);
 	}
 
 }

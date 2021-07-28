@@ -12,7 +12,7 @@ public class PackageWriter implements CodeWriter {
 
 	@Override
 	public void write(IndentingWriter writer) {
-		writer.println(String.format("package %s;", packageName));
+		writer.println(String.format("package %s;", this.packageName));
 		writer.println();
 	}
 

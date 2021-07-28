@@ -65,8 +65,7 @@ class WebProjectGenerationConfigurationTest {
 
 		ProjectStructure project = this.projectTester.generate(description);
 
-		assertThat(project)
-				.doesNotContainFiles("src/test/java/com/example/demo/DemoApplicationTests.java");
+		assertThat(project).doesNotContainFiles("src/test/java/com/example/demo/DemoApplicationTests.java");
 	}
 
 }

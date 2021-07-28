@@ -16,14 +16,14 @@ public class CompilationUtilWriter implements CodeWriter {
 
 	@Override
 	public void write(IndentingWriter writer) {
-		createCodeWriters().forEach(codeWriter -> codeWriter.write(writer));
+		createCodeWriters().forEach((codeWriter) -> codeWriter.write(writer));
 	}
 
 	private List<CodeWriter> createCodeWriters() {
 		List<CodeWriter> writers = new LinkedList<>();
-		writers.add(new PackageWriter(compilationUnit.getPackageName()));
-		writers.add(new ImportsWriter(compilationUnit.getTypeDeclarations()));
-		writers.add(new TypeDeclarationsWriter(compilationUnit.getTypeDeclarations()));
+		writers.add(new PackageWriter(this.compilationUnit.getPackageName()));
+		writers.add(new ImportsWriter(this.compilationUnit.getTypeDeclarations()));
+		writers.add(new TypeDeclarationsWriter(this.compilationUnit.getTypeDeclarations()));
 		return writers;
 	}
 
