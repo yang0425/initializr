@@ -32,7 +32,10 @@ class WebProjectGenerationConfigurationTest {
 				"src/main/java/com/example/demo/service/HelloWorldService.java",
 				"src/main/java/com/example/demo/repository/HelloWorldRepository.java",
 				"src/main/java/com/example/demo/entity/HelloWorld.java",
-				"src/main/java/com/example/demo/dto/HelloWorldDto.java");
+				"src/main/java/com/example/demo/dto/HelloWorldDto.java",
+				"src/test/java/com/example/demo/controller/HelloWorldControllerTest.java",
+				"src/test/java/com/example/demo/service/HelloWorldServiceTest.java.gen",
+				"src/test/java/com/example/demo/repository/HelloWorldRepositoryTest.java");
 	}
 
 	@Test
@@ -46,7 +49,10 @@ class WebProjectGenerationConfigurationTest {
 				"src/main/java/com/example/demo/service/HelloWorldService.java",
 				"src/main/java/com/example/demo/repository/HelloWorldRepository.java",
 				"src/main/java/com/example/demo/entity/HelloWorld.java",
-				"src/main/java/com/example/demo/dto/HelloWorldDto.java");
+				"src/main/java/com/example/demo/dto/HelloWorldDto.java",
+				"src/test/java/com/example/demo/controller/HelloWorldControllerTest.java",
+				"src/test/java/com/example/demo/service/HelloWorldServiceTest.java",
+				"src/test/java/com/example/demo/repository/HelloWorldRepositoryTest.java");
 	}
 
 	@Test

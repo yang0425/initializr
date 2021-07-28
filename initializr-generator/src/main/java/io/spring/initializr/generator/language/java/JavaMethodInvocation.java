@@ -1,5 +1,6 @@
 package io.spring.initializr.generator.language.java;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,18 +14,18 @@ public class JavaMethodInvocation implements JavaExpression {
 
 	private final String name;
 
-	private final List<JavaExpression> arguments;
+	private final List<JavaExpression> arguments = new ArrayList<>();
 
 	public JavaMethodInvocation(String target, String name, String... arguments) {
 		this.target = new JavaStringExpression(target);
 		this.name = name;
-		this.arguments = Arrays.stream(arguments).map(JavaStringExpression::new).collect(Collectors.toList());
+		this.arguments.addAll(Arrays.stream(arguments).map(JavaStringExpression::new).collect(Collectors.toList()));
 	}
 
 	public JavaMethodInvocation(JavaExpression target, String name, JavaExpression... arguments) {
 		this.target = target;
 		this.name = name;
-		this.arguments = Arrays.asList(arguments);
+		this.arguments.addAll(Arrays.asList(arguments));
 	}
 
 	public JavaExpression getTarget() {
@@ -33,6 +34,14 @@ public class JavaMethodInvocation implements JavaExpression {
 
 	public String getName() {
 		return this.name;
+	}
+
+	public void addArgument(String argument) {
+		this.arguments.add(new JavaStringExpression(argument));
+	}
+
+	public void addArgument(JavaExpression argument) {
+		this.arguments.add(argument);
 	}
 
 	public List<JavaExpression> getArguments() {
