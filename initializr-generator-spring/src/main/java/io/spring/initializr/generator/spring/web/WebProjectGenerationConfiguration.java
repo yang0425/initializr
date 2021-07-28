@@ -7,15 +7,14 @@ import io.spring.initializr.generator.spring.web.dto.DtoMainContributorConfigura
 import io.spring.initializr.generator.spring.web.entity.EntityMainContributorConfiguration;
 import io.spring.initializr.generator.spring.web.repository.RepositoryMainContributorConfiguration;
 import io.spring.initializr.generator.spring.web.service.ServiceMainContributorConfiguration;
+
 import org.springframework.context.annotation.Import;
 
 @ProjectGenerationConfiguration
 @ConditionalOnRequestedDependency("web")
-@Import({ControllerMainContributorConfiguration.class,
-    ServiceMainContributorConfiguration.class,
-    RepositoryMainContributorConfiguration.class,
-    EntityMainContributorConfiguration.class,
-    DtoMainContributorConfiguration.class})
+@Import({ ControllerMainContributorConfiguration.class, ServiceMainContributorConfiguration.class,
+		RepositoryMainContributorConfiguration.class, EntityMainContributorConfiguration.class,
+		DtoMainContributorConfiguration.class })
 public class WebProjectGenerationConfiguration {
 
 }

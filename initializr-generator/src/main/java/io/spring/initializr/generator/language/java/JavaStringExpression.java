@@ -18,14 +18,14 @@ package io.spring.initializr.generator.language.java;
 
 public class JavaStringExpression extends JavaExpression {
 
-    private final String content;
+	private final String content;
 
-    public JavaStringExpression(String content) {
-        this.content = content;
-    }
+	public JavaStringExpression(String content) {
+		this.content = content;
+	}
 
-    public String getContent() {
-        return this.content;
-    }
+	public String getContent() {
+		return this.content;
+	}
 
 }
